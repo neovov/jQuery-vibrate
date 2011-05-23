@@ -1,0 +1,44 @@
+<project name="jquery.vibrate" default="main">
+
+	<!-- Folders -->
+	<property name="build" value="." />
+	<property name="src"   value="./src" />
+	<property name="tools" value="./tools" />
+
+	<!-- File to build -->
+	<property name="APP"     value="${src}/${ant.project.name}.js" />
+	<property name="APP_MIN" value="${src}/${ant.project.name}.min.js" />
+
+	<!-- Tools -->
+	<property name="tester"     value="${tools}/rhino-1.7R2.jar" />
+	<property name="console"    value="${tools}/jslint-console.js" />
+	<property name="validator"  value="${tools}/jslint.js" />
+	<property name="compressor" value="${tools}/yuicompressor-2.4.2.jar" />
+
+	<!-- Cleaning task -->
+	<target name="clean">
+		<delete file="${APP_MIN}" />
+	</target>
+
+	<!-- Main task -->
+	<target name="min" description="Minify the application">
+		<echo message="Minifying (${APP_MIN})" />
+
+		<java jar="${compressor}" fork="true" output="${APP_MIN}">
+			<arg value="${APP}" />
+		</java>
+	</target>
+
+	<!-- Validator task -->
+	<target name="qa" description="Validate the code">
+		<echo message="Validating application" />
+		<apply executable="java" failonerror="true">
+			<arg value="-jar" />
+			<arg value="${tester}" />
+			<arg value="${console}" />
+			<arg value="${validator}" />
+			<fileset file="${APP}"></fileset>
+		</apply>
+		<echo message="Validation done." />
+	</target>
+</project>

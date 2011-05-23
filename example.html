@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+
+	<!-- HTML5 for IE -->
+	<!--[if lt IE 9]>
+		<script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<style type="text/css">
+		.box {
+			width: 100px;
+			height: 100px;
+			line-height: 100px;
+			margin: 1em;
+			font-size: 35px;
+			text-align: center;
+			color: #FFF;
+		}
+
+		#box1 { background: pink; }
+		#box2 { background: blueviolet; }
+	</style>
+
+	<title></title>
+</head>
+
+<body>
+	<div id="box1" class="box">1</div>
+	<div id="box2" class="box">2</div>
+
+	<div id="buttons">
+		<button>Vibrate box 1</button>
+		<button>Vibrate box 2</button>
+		<button>Vibrate both</button>
+		<button>Vibrate box 1 (hard)</button>
+		<button>Vibrate box 2 (long)</button>
+	</div>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+	<script src="src/jquery.vibrate.js"></script>
+	<script>
+		$(document).ready(function() {
+			var
+				$box1 = $("#box1"),
+				$box2 = $("#box2"),
+				$boxes = $("div.box"),
+				$buttons = $("button");
+
+			$buttons.eq(0).click(function() {
+				$box1.vibrate();
+			});
+
+			$buttons.eq(1).click(function() {
+				$box2.vibrate();
+			});
+
+			$buttons.eq(2).click(function() {
+				$boxes.vibrate();
+			});
+
+			$buttons.eq(3).click(function() {
+				$box1.vibrate({ spread: 10 });
+			});
+
+			$buttons.eq(4).click(function() {
+				$box2.vibrate({ duration: 1000 });
+			});
+		});
+	</script>
+</body>
+</html>
